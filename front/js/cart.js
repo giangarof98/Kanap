@@ -34,7 +34,7 @@ function showCart(){
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
                     <h2>${array[i].name}</h2>
-                    <p>$ ${array[i].price * array[i].quantity}</p>
+                    <p>€ ${array[i].price * array[i].quantity}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -130,8 +130,7 @@ function order(data){
       console.log(data)
 
       orderId = data.orderId;
-      sessionStorage.setItem("orderId", orderId)
-      location.replace('confirmation.html')
+      location.replace(`confirmation.html?orderId=${orderId}`)
     })
 }
 

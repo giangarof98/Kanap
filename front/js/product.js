@@ -49,31 +49,70 @@ function display(data){
         select.appendChild(arr)
     }
 
-    itemImg.innerHTML = `<img src="${imageUrl}" alt="Photographie d'un canapé">`
+    itemImg.innerHTML = `<img src="${imageUrl}" alt="">`
 }
 
 //Save Item in localStore
 add.addEventListener('click', () => {
     let list = [];
-    const local = localStorage.getItem('cart')
-    if(local === null){
-        list = [];
-    } else {
-        list = JSON.parse(local)
-    }
+    let local = localStorage.getItem('cart');
+    let dataQty = document.getElementById('quantity');
+    let dataColor = document.getElementById('colors');
+    // if(local === null){
+    //     list = [];
+    // } else {
+    //     list = JSON.parse(local)
+    // }
     
     let productList = {
         imageUrl: product.imageUrl,
         name: product.name,
         id: product._id,
         price: product.price,
-        colors: product.colors,
+        colors: dataColor.value,
         altTxt: product.altTxt,
-        quantity: qty.value
-    } 
-    list.push(productList);
-    localStorage.setItem('cart', JSON.stringify(list));
-    console.log(productList);
+        quantity: dataQty.value
+    }
+
+    if(localStorage.getItem('cart') && localStorage.getItem('cart').length === 0) {
+        const local = JSON.parse(localStorage.getItem('cart')); 
+        const data = local.findIndex(data => data.name === productList.name && data.colors === productList.colors);
+        if(data === -1){
+            local.push(productList);
+            localStorage.setItem('cart', JSON.stringify(local))
+        } else {
+            local[data].quantity = parseInt(local[data].quantity) + parseInt(productList.quantity)
+            localStorage.setItem('cart', JSON.stringify(local))
+        } 
+    } else {
+        local = [];
+        local.push(productList);
+        localStorage.setItem('cart', JSON.stringify(local))
+    }
+
+    // if(list.length === 0){
+    //     list.push(productList);
+    // } else {
+    //     let doPush = true;
+    //     for(let i =0; i < list.length; i++){
+    //         if(productList.name === list[i].name && productList.colors === list[i].colors){
+    //             list[i].quantity = productList[i].quantity;
+
+    //         }
+    //     } 
+
+    //     if(doPush){
+    //         list.push(productList);
+    //     }
+
+    // }
+    // localStorage.setItem('cart', JSON.stringify(list));
+    // console.log(productList);
+
+    // list.push(productList);
+    // localStorage.setItem('cart', JSON.stringify(list));
+    // console.log(productList);
+
 })
 
 init()
