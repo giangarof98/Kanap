@@ -25,6 +25,10 @@ function showCart(){
     console.log(array)
     if(array){ 
         for(let i = 0; i < array.length; i++){
+            let price = array[i].price;
+            let qty = array[i].quantity;
+            let total = price * qty;
+            let totalItems = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             let article = document.createElement('article')
             article.innerHTML = `
               <article class="cart__item" data-id="{product-ID}">
@@ -34,11 +38,12 @@ function showCart(){
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
                     <h2>${array[i].name}</h2>
-                    <p>€ ${array[i].price * array[i].quantity}</p>
+                    <p>${array[i].colors}</p>
+                    <p>€ ${totalItems}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                      <p>Qté : ${array[i]. quantity}</p>
+                      <p>Qté : ${array[i].quantity}</p>
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${array[i].quantity}" onchange="changeQty(${i}, event.target.value)">
                     </div>
                     <div class="cart__item__content__settings__delete">
@@ -76,7 +81,7 @@ function total(){
 }
 
     if(totalPrice){
-        totalPrice.innerHTML = totalCart;
+        totalPrice.innerHTML = totalCart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         sessionStorage.setItem('Total', JSON.stringify(totalCart));
 
     }

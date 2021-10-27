@@ -40,7 +40,7 @@ function display(data){
     console.log(imageUrl)
 
     title.innerHTML = name;
-    priceItem.innerHTML = price;
+    priceItem.innerHTML = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     descriptionItem.innerHTML = description;
 
     for(let i in colors){
@@ -74,7 +74,7 @@ add.addEventListener('click', () => {
         quantity: dataQty.value
     }
 
-    if(localStorage.getItem('cart') && localStorage.getItem('cart').length === 0) {
+    if(localStorage.getItem('cart') && localStorage.getItem('cart').length > 0) {
         const local = JSON.parse(localStorage.getItem('cart')); 
         const data = local.findIndex(data => data.name === productList.name && data.colors === productList.colors);
         if(data === -1){
