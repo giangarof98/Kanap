@@ -81,7 +81,7 @@ add.addEventListener('click', () => {
             local.push(productList);
             localStorage.setItem('cart', JSON.stringify(local))
         } else {
-            local[data].quantity = parseInt(local[data].quantity) + parseInt(productList.quantity)
+            local[data].quantity = parseInt(productList.quantity)
             localStorage.setItem('cart', JSON.stringify(local))
         } 
     } else {
